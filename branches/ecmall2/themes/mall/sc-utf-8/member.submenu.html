@@ -1,0 +1,12 @@
+        <ul class="tab">
+            <!--{foreach from=$_member_submenu item=_s_m name=member_submenu}-->
+            <!--{if $_curmenu eq $_s_m.name}-->
+            <li class="active">{$_s_m.text}</li>
+            <!--{else}-->
+                <!--{if $_s_m.text eq "TaoBao"}-->
+                <!--{else}-->
+                     <li class="normal"><a href="{$_s_m.url}">{$_s_m.text}</a></li>
+                <!--{/if}-->
+            <!--{/if}-->
+            <!--{/foreach}-->
+        </ul>

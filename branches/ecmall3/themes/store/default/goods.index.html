@@ -1,0 +1,75 @@
+{include file=header.html}
+
+{include file=top.html}
+
+<div id="content">
+    <div id="left">
+        {include file=left.html}
+    </div>
+    
+    <div id="right">
+        {include file=goodsinfo.html}
+        
+        <ul class="user_menu">
+            <div class="ornament1"></div>
+            <div class="ornament2"></div>
+            <li><a class="active" href="#"><span>{$lang.goods_detail}</span></a></li>
+            <li><a class="normal" href="index.php?app=goods&amp;act=comments&amp;id={$goods.goods_id}"><span>{$lang.goods_comment}</span></a></li>
+            <li><a class="normal" href="index.php?app=goods&amp;act=saleslog&amp;id={$goods.goods_id}"><span>{$lang.sales_log}</span></a></li>
+            <li><a class="normal" href="index.php?app=goods&amp;act=qa&amp;id={$goods.goods_id}"><span>{$lang.qa}</span></a></li>
+        </ul>
+        
+        <div class="option_box">
+            <div class="default">{$goods.description|escape:editor}</div>
+        </div>
+        
+        <div class="module_currency">
+            <h2 class="common_title veins1">
+                <div class="ornament1"></div>
+                <div class="ornament2"></div>
+                <span class="ico1"><span class="ico2">{$lang.latest_goods_comment}</span></span>
+            </h2>
+            <div class="wrap">
+                <div class="wrap_child">
+                    {include file=comments.html}
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        
+        <div class="module_currency">
+            <h2 class="common_title veins1">
+                <div class="ornament1"></div>
+                <div class="ornament2"></div>
+                <span class="ico1"><span class="ico2">{$lang.latest_sales_log}</span></span>
+            </h2>
+            <div class="wrap">
+                <div class="wrap_child">
+                    {include file=saleslog.html}
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        
+        <div class="module_currency">
+            <h2 class="common_title veins1">
+                <div class="ornament1"></div>
+                <div class="ornament2"></div>
+                <span class="ico1"><span class="ico2">{$lang.latest_qa}</span></span>
+            </h2>
+            <div class="wrap">
+                <div class="wrap_child">
+                    {include file=qa.html}
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+    <div class="clear"></div>
+</div>
+
+{include file=footer.html}

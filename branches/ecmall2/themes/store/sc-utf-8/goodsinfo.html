@@ -1,0 +1,166 @@
+<script type="text/javascript" src="{lib file=goodsinfo.js}" charset="utf-8"></script>
+<script type="text/javascript">
+//<!CDATA[
+
+/* LLL function starttalk() */
+function starttalk()
+{
+    var urltalk=SITE_URL+"/index.php?app=message&act=starttalk&to_id={$store.store_owner.user_id|escape}";
+    if( window.screen.height >= 768)
+        window.open(urltalk, 'chat', 'scrollbars=no, location =no, toolbar=no, status=no, resizable=no, width=720px, height=530px');
+    else
+        window.open(urltalk, 'chat', 'scrollbars=yes,location =no, toolbar=no, status=no, resizable=no, width=720px, height=530px');
+
+}
+
+
+/* buy */
+function buy()
+{
+    if (goodsspec.getSpec() == null)
+    {
+        alert(lang.select_specs);
+        return;
+    }
+    var spec_id = goodsspec.getSpec().id;
+
+    var quantity = $("#quantity").val();
+    if (quantity == '')
+    {
+        alert(lang.input_quantity);
+        return;
+    }
+    if (parseInt(quantity) < 1)
+    {
+        alert(lang.invalid_quantity);
+        return;
+    }
+    add_to_cart(spec_id, quantity);
+}
+
+/* add cart */
+function add_to_cart(spec_id, quantity)
+{
+    var url = SITE_URL + '/index.php?app=cart&act=add';
+    $.getJSON(url, {'spec_id':spec_id, 'quantity':quantity}, function(data){
+        if (data.done)
+        {
+            $('.bold_num').text(data.retval.cart.kinds);
+            $('.bold_mly').html(price_format(data.retval.cart.amount));
+            $('.ware_cen').slideDown('slow');
+            setTimeout(slideUp_fn, 5000);
+        }
+        else
+        {
+            alert(data.msg);
+        }
+    });
+}
+
+var specs = new Array();
+<!--{foreach from=$goods._specs item=spec}-->
+specs.push(new spec({$spec.spec_id}, '{$spec.spec_1}', '{$spec.spec_2}', {$spec.price}, {$spec.stock}));
+<!--{/foreach}-->
+var specQty = {$goods.spec_qty};
+var defSpec = {$goods.default_spec};
+var goodsspec = new goodsspec(specs, specQty, defSpec);
+//]]>
+</script>
+
+<h2 class="ware_title">{$goods.goods_name|escape}</h2>
+
+<div class="ware_info">
+    <div class="ware_pic">
+        <div class="big_pic">
+            <a href="javascript:;"><span class="jqzoom"><img src="{$goods._images.0.thumbnail|default:$default_image}" width="300" height="300" jqimg="{$goods._images.0.image_url}" /></span></a>
+        </div>
+
+        <div class="bottom_btn">
+            <!--<a class="collect" href="javascript:collect_goods({$goods.goods_id});" title="{$lang.add_to_favorite}"></a>-->
+            <div class="left_btn"></div>
+            <div class="right_btn"></div>
+            <div class="ware_box">
+                <ul>
+                    <!--{foreach from=$goods._images item=goods_image name=fe_goods_image}-->
+                    <li {if $smarty.foreach.fe_goods_image.first}class="ware_pic_hover"{/if} bigimg="{$goods_image.image_url}"><img src="{$goods_image.thumbnail}" width="55" height="55" /></li>
+                    <!--{/foreach}-->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ware_text">
+        <table border="0"><tr>
+            <td><div class="rate">
+                <!--LLL display the 货号 in goods view-->
+                {$lang.sku}: <span>{$goods._specs.0.sku} </span><br />
+                <!-LLL display the price in goods view -->
+                {$lang.price2}: <span style="text-decoration: line-through;">{$goods._specs.0.price2|price} </span><br />
+                {$lang.price}: <span class="fontColor3" ectype="goods_price">{$goods._specs.0.price|price} </span><br />
+                {$lang.brand}: {$goods.brand}<br />
+                <!--LLL 屏蔽 销售情况{$lang.sale_situation}: {$sales_info}{$comments}<br />-->
+                {$lang.region}: {$store.region_name}
+            </div></td>
+
+            <td align="center" border="0"><!--LLL 加入联系店主的按按钮-->
+            <div class="contact">
+                <!--{if time() - $store['store_owner']['last_chat_time']<31}-->
+                <a class="ware_link" href="javascript: starttalk();" title="{$lang.call_me_tip}" style="font-weight: bold;color:red;text-align: center;"><img border="0" src="themes/res/img/kf.jpg" height="80" /><br />{$lang.call_me}</a>
+                <!--{else}-->
+                <a class="ware_link" target="_blank" title="{$lang.leave_message_tip}" href="index.php?app=message&act=send&to_id={$store.store_owner.user_id|escape}" style="color:red;text-align: center;"><img src="themes/res/img/mail_icon2.gif" height="60" /><br />{$lang.send_pm}</a>
+                <!--{/if}-->
+            </div></td>
+        </tr></table>
+
+        <div class="handle">
+            <!--{if $goods.spec_qty gt 0}-->
+            <ul>
+                <li class="handle_title">{$goods.spec_name_1}: </li>
+            </ul>
+            <!--{/if}-->
+            <!--{if $goods.spec_qty gt 1}-->
+            <ul>
+                <li class="handle_title">{$goods.spec_name_2}: </li>
+            </ul>
+            <!--{/if}-->
+            <ul>
+                <li class="handle_title">{$lang.quantity}: </li>
+                <li>
+                    <input type="text" class="text width1" name="" id="quantity" value="1" />
+                    {$lang.unit}{$lang.left_bracket}{$lang.stock1}<span class="stock" ectype="goods_stock">{$goods._specs.0.stock}</span>{$lang.units}{$lang.right_bracket}
+                </li>
+            </ul>
+            <!--{if $goods.spec_qty gt 0}-->
+            <ul>
+                <li class="handle_title">{$lang.your_select}: </li>
+                <li class="aggregate" ectype="current_spec"></li>
+            </ul>
+            <!--{/if}-->
+        </div>
+
+        <ul class="ware_btn">
+            <div class="ware_cen" style="display:none">
+                <div class="ware_center">
+                    <h1>
+                        <span class="dialog_title">{$lang.add_to_cart_ok}</span>
+                        <span class="close_link" title="{$lang.close}" onmouseover="this.className = 'close_hover'" onmouseout="this.className = 'close_link'" onclick="slideUp_fn();"></span>
+                    </h1>
+                    <div class="ware_cen_btn">
+                        <p class="ware_text_p">{$lang.cart_status}</p>
+                        <p class="ware_text_btn">
+                            <input type="submit" class="btn1" name="" value="{$lang.view_cart}" onclick="location.href='index.php?app=cart'" />
+                            <input type="submit" class="btn2" name="" value="{$lang.continue_buy}" onclick="$('.ware_cen').css({'display':'none'});" />
+                        </p>
+                    </div>
+                </div>
+                <div class="ware_cen_bottom"></div>
+            </div>
+
+            <!--<li class="btn_c1" title="{$lang.buy_now}"><a href="#"></a></li>-->
+            <!--LLL 屏蔽 加入购物车<li class="btn_c2" title="{$lang.add_to_cart}"><a href="javascript:buy();"></a></li>-->
+            <li class="btn_c3" title="{$lang.add_to_favorite}"><a href="javascript:collect_goods({$goods.goods_id});"></a></li>
+        </ul>
+    </div>
+
+    <div class="clear"></div>
+</div>

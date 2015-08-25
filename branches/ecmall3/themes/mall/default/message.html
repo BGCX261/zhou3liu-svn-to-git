@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={$charset}" />
+<title> {$lang.ecmall_sysmsg} -- Powered by ECMall </title>
+<link href="{res file=css/ecmall.css}" rel="stylesheet" type="text/css" />
+
+{literal}
+<style>
+#box { width: 420px; position: absolute; left: 50%; margin-left: -210px; }
+.dos_prompt { padding: 30px 0 40px 150px; }
+.dos_prompt h3 { margin-bottom: 20px; }
+.dos_prompt h4 { font-size: 12px; font-weight: normal; margin-bottom: 10px; }
+.dos_prompt p { line-height: 20px; }
+.dos_prompt p a { color: #0066cb; font-family: "宋体"; }
+.dos_prompt p a:hover { color: red; }
+.right_ico { background: url( {res file="images/member/ico_bg.gif"} ) no-repeat 70px -189px; }
+.error_ico { background: url( {res file="images/member/ico_bg.gif"} ) no-repeat 70px 24px; }
+</style>
+{/literal}
+
+<script type="text/javascript">
+//<!CDATA[
+window.onload = function () {
+    var box = document.getElementById("box");
+    box.style.top = "50%";
+    box.style.marginTop = -(box.offsetHeight / 2) + "px";
+};
+
+<!--{if $redirect}-->
+window.setTimeout("{$redirect}", 3000);
+<!--{/if}-->
+//]]>
+</script>
+</head>
+
+<body>
+<div id="box">
+    <div class="module_common">
+        <h2><b class="information" title="information{$lang.ecmall_sysmsg}"></b></h2>
+        <div class="wrap">
+            <div class="wrap_child">
+                <div class="dos_prompt {if $icon eq "notice"}right_ico{else}error_ico{/if}">
+                    <h3>{$message}</h3>
+                    <!--{if $err_file}-->
+                    <h4>Error File: <b>{$err_file}</b> at <b>{$err_line}</b> line.</h4>
+                    <!--{/if}-->
+                    <!--{if $redirect}-->
+                    <h4>{$lang.auto_redirect}</h4>
+                    <!--{/if}-->
+                    <p>
+                        <!--{foreach from=$links item=item}-->
+                        <a href="{$item.href}">>> {$item.text}</a><br />
+                        <!--{/foreach}-->
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

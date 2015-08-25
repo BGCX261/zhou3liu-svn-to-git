@@ -1,0 +1,27 @@
+<?php
+return array(
+    'my_qa_list' => 'Elenco di domande',
+    'already_replied' => 'Questa domanda e stata risposta.',
+    'content' => 'Contenuto',
+    'status' => 'Stato',
+    'guest' => 'Ospite',
+    'has_reply' => 'Vedi le risposte',
+    'reply' => 'Risponde',
+    'all_qa' => 'Tutte le domande',
+    'to_reply_qa' => 'Domande che non hai risposto',
+    'replied' => 'Domande che hai risposto',
+    'my_reply' => 'Le mie risposte',
+    'goods_name' => 'Nome del oggetto',
+    'content_not_null' => 'Il contenuto non può essere vuoto',
+    'max_script' => 'Contenuto non puo comprendere piu di 255 parole.',
+    'to_reply_list' => 'Torna all\'elenco di risposta',
+    'reply_successful' => 'Risponde con successo.',
+    'question_content' => 'Contenuto',
+    'checkall' => 'Seleziona tutto',
+    'drop_confirm' => 'Sei sicuro di voler eliminare queste domande?',
+    'no_qa_to_drop' => 'Non c\'e consultivo che specificato',
+    'drop_failed' => 'Elimina fallimento',
+    'drop_successful' => 'Elimina con successo.',
+    'reply_question' => 'Risponde',
+);
+?>

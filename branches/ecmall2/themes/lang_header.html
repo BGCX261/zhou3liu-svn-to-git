@@ -1,0 +1,15 @@
+<style type="text/css">
+.lan_cn { height: 15px; padding-left:20px; background: url("{res file=images/cn.gif}") no-repeat 0px 0px; }
+.lan_it { height: 15px; padding-left:20px; background: url("{res file=images/it.gif}") no-repeat 0px 1px; }
+.chat_host {border-style: groove;
+background-color: yellow;
+font-weight: bold;
+font-style: normal;
+font-size: larger;
+color: red;}
+</style>
+<!--{if $chat_host_url}-->
+<span>|</span><span><a title="{$lang.chat_host_tip}" class="chat_host" href={$chat_host_url} target='_blank' link="red">{$lang.chat_host}</a></span>
+<!--{/if}-->
+<span>|</span><a class="lan_cn" href="javascript:chglang('sc-utf-8')">中文</a>
+<span></span><a class="lan_it" href="javascript:chglang('it-utf-8')">Italiano</a>
